@@ -9,6 +9,7 @@ public class ConfigReader {
 	private static Properties properties;
 	private final static String propertyFilePath = "./src/test/resources/config/config.properties";
 	private static String browserType = null;
+
 	public static void loadConfig() throws Throwable {
 
 		try {
@@ -27,9 +28,27 @@ public class ConfigReader {
 		}
 	}
 
+	FileInputStream fis1;
+
+	public Properties loadProperties() {
+		try {
+			fis1 = new FileInputStream("src/test/resources/config/config.properties");
+			Properties prop = new Properties();
+			prop.load(fis1);
+			fis1.close();
+			return prop;
+
+		} catch (Exception e) {
+			System.out.println("Config.properties file not found");
+			return null;
+		}
+
+	}
+
 	public static void setBrowserType(String browser) {
 		browserType = browser;
 	}
+
 	public static String getBrowserType() throws Throwable {
 		String browserType = properties.getProperty("browser");
 		if (browserType != null)
@@ -52,6 +71,14 @@ public class ConfigReader {
 			return homeurl;
 		else
 			throw new RuntimeException("Homeurl not specified in the Configuration.properties file.");
+	}
+
+	public static String getDepositPage() {
+		String depositUrl = properties.getProperty("depositpage");
+		if (depositUrl != null)
+			return depositUrl;
+		else
+			throw new RuntimeException("Depositurl not secified in the configuration.properties");
 	}
 
 	// Signin
@@ -113,6 +140,7 @@ public class ConfigReader {
 		else
 			throw new RuntimeException(pagename + "url not specified in the Configuration.properties file.");
 	}
+
 	// Queue
 	public static String getQueueUrl() {
 		String queueurl = properties.getProperty("queueurl");
@@ -209,7 +237,5 @@ public class ConfigReader {
 		else
 			throw new RuntimeException("tree url not specified in the Configuration.properties file.");
 	}
-
-	
 
 }
