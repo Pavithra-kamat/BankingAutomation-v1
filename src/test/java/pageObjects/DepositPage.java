@@ -36,6 +36,8 @@ public class DepositPage {
 	@FindBy(xpath = "//label[@id='message17']")
 	@CacheLookup
 	WebElement txtDescErrorMsg;
+	
+	//we need to move functions from step definition to here 
 
 	
 }
